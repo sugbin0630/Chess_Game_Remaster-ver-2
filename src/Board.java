@@ -4,6 +4,8 @@
  * 화면 인터페이스 밑 저장기능
  * 각각 다른 클래스로 분리후 클린코드 작업
  * 
+ * Board 클래스에서 각각의 기능이 구현된 Panel을 하니로 통합
+ * 
  * 체크메이트 기능 구현
  * 기능구현을 위해 각 인덱스에 catchable variable 추가
  */
@@ -231,4 +233,56 @@ public class Board extends JFrame {
         }
         new Board(newGame);
     }
+}
+
+/**
+ * Board_Display
+ * 
+ * 보드 모양
+ */
+class Board_Display {
+
+    
+}
+
+/**
+ * Board_Interface
+ * 
+ * 보드 버튼
+ */
+class Board_Interface {
+
+    
+}
+
+/**
+ * Loud_Display
+ */
+class Loud_Display {
+
+    
+}
+
+/**
+ * Loud_Interface
+ */
+class Loud_Interface {
+
+    
+}
+
+/**
+ * Game_Display
+ */
+class Game_Display {
+
+    
+}
+
+/**
+ * Game_Interface
+ */
+class Game_Interface {
+
+    
 }
