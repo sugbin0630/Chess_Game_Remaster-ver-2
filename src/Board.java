@@ -18,8 +18,6 @@ public class Board extends JFrame {
     final static String FILE_LOCATION = "C:/Users/Sungbin Ko/Desktop/coding/Java/Chess_Game_Remaster/src/";
     private Container c = getContentPane();
     private static RecordGroup recordGroup = RecordGroup.getRecordGroup();
-    static Game_Record newGame = new Game_Record("", "", 0, 1,
-    recordGroup.getArrayList());
     static JPanel name_Input_Panel = new JPanel() {
     };
     static JPanel load_Window = new JPanel();
@@ -31,7 +29,7 @@ public class Board extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         c.setBackground(new Color(45, 45, 45));
-        name_Panel();
+        name_Panel(game);
         setLoadWindow();
         setButton(game);
         setPieces(game);
@@ -222,7 +220,7 @@ public class Board extends JFrame {
     // setSize(500, 400);
     // }
     // }
-    void name_Panel() {
+    void name_Panel(Game_Record game) {
         TextField player1_Name = new TextField(10);
         TextField player2_Name = new TextField(10);
         JButton OK_button = new JButton("OK");
@@ -232,14 +230,14 @@ public class Board extends JFrame {
 
             if (player1_Name.getText() !=
              "") {
-                newGame.setPlayer1(player1_Name.getText());
+                game.setPlayer1(player1_Name.getText());
             } else {
-                newGame.setPlayer1("player1");
+                game.setPlayer1("player1");
             }
             if (player1_Name.getText() != "") {
-                newGame.setPlayer2(player2_Name.getText());
+                game.setPlayer2(player2_Name.getText());
             } else {
-                newGame.setPlayer2("player2");
+                game.setPlayer2("player2");
             }
         });
         
@@ -257,7 +255,8 @@ public class Board extends JFrame {
     }
     
     public static void main(String[] args) {
-
+        Game_Record newGame = new Game_Record("", "", 0, 1,
+        recordGroup.getArrayList());
         recordGroup.fileLoad(FILE_LOCATION + FILE_NAME);
 
         new Board(newGame);
