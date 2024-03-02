@@ -20,7 +20,8 @@ public class Board extends JFrame {
     private static RecordGroup recordGroup = RecordGroup.getRecordGroup();
     static JPanel name_Input_Panel = new JPanel() {
     };
-    static JPanel load_Window = new JPanel();
+    static JPanel load_Window = new JPanel() {
+    };
 
     Board(Game_Record game) {
         c.setLayout(null);
@@ -228,8 +229,7 @@ public class Board extends JFrame {
             name_Input_Panel.setEnabled(false);
             name_Input_Panel.setVisible(false);
 
-            if (player1_Name.getText() !=
-             "") {
+            if (player1_Name.getText() != "") {
                 game.setPlayer1(player1_Name.getText());
             } else {
                 game.setPlayer1("player1");
@@ -240,7 +240,7 @@ public class Board extends JFrame {
                 game.setPlayer2("player2");
             }
         });
-        
+
         name_Input_Panel.setLayout(new BoxLayout(name_Input_Panel, BoxLayout.Y_AXIS));
         name_Input_Panel.setBackground(new Color(255, 255, 255));
         name_Input_Panel.setBounds(250, 0, 300, 300);
@@ -253,12 +253,12 @@ public class Board extends JFrame {
 
         c.add(name_Input_Panel);
     }
-    
+
     public static void main(String[] args) {
         Game_Record newGame = new Game_Record("", "", 0, 1,
-        recordGroup.getArrayList());
+                recordGroup.getArrayList());
         recordGroup.fileLoad(FILE_LOCATION + FILE_NAME);
 
         new Board(newGame);
-    }    
+    }
 }
