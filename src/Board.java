@@ -18,7 +18,9 @@ public class Board extends JFrame {
     final static String FILE_LOCATION = "C:/Users/Sungbin Ko/Desktop/coding/Java/Chess_Game_Remaster/src/";
     private Container c = getContentPane();
     private static RecordGroup recordGroup = RecordGroup.getRecordGroup();
-    static JPanel page1 = new JPanel() {
+    static Game_Record newGame = new Game_Record("", "", 0, 1,
+    recordGroup.getArrayList());
+    static JPanel name_Input_Panel = new JPanel() {
     };
     static JPanel load_Window = new JPanel();
 
@@ -29,10 +31,13 @@ public class Board extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         c.setBackground(new Color(45, 45, 45));
+        name_Panel();
         setLoadWindow();
         setButton(game);
         setPieces(game);
         setBoard();
+
+        
         setVisible(true);
     }
 
@@ -60,6 +65,7 @@ public class Board extends JFrame {
         j.setIcon(null);
         c.add(j);
         j.setEnabled(false);
+        c.add(name_Input_Panel);
 
         saveButton.addActionListener(event -> {
             if (recordGroup.saveGame(game, FILE_LOCATION + FILE_NAME)) {
@@ -214,12 +220,47 @@ public class Board extends JFrame {
         c.add(load_Window);
     }
 
+    // setSize(500, 400);
+    // }
+    // }
+    void name_Panel() {
+        TextField player1_Name = new TextField(10);
+        TextField player2_Name = new TextField(10);
+        JButton OK_button = new JButton("OK");
+        OK_button.addActionListener(event -> {
+            name_Input_Panel.setEnabled(false);
+            name_Input_Panel.setVisible(false);
+
+            if (player1_Name.getText() !=
+             "") {
+                newGame.setPlayer1(player1_Name.getText());
+            } else {
+                newGame.setPlayer1("player1");
+            }
+            if (player1_Name.getText() != "") {
+                newGame.setPlayer2(player2_Name.getText());
+            } else {
+                newGame.setPlayer2("player2");
+            }
+        });
+        
+        name_Input_Panel.setLayout(new BoxLayout(name_Input_Panel, BoxLayout.Y_AXIS));
+        name_Input_Panel.setBackground(new Color(255, 255, 255));
+        name_Input_Panel.setBounds(250, 0, 300, 300);
+        name_Input_Panel.add(new JLabel("Enter player1 name"));
+        name_Input_Panel.add(player1_Name);
+        name_Input_Panel.add(new JLabel("Enter player2 name"));
+        name_Input_Panel.add(player2_Name);
+
+        name_Input_Panel.add(OK_button);
+
+        c.add(name_Input_Panel);
+    }
+    
     public static void main(String[] args) {
-        Game_Record newGame = new Game_Record("player1", "player2", 0, 1,
-                recordGroup.getArrayList());
 
         recordGroup.fileLoad(FILE_LOCATION + FILE_NAME);
 
         new Board(newGame);
-    }
+    }    
 }
