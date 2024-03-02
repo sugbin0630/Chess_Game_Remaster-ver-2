@@ -36,8 +36,6 @@ public class Board extends JFrame {
         setButton(game);
         setPieces(game);
         setBoard();
-
-        
         setVisible(true);
     }
 
@@ -217,6 +215,7 @@ public class Board extends JFrame {
             load_Window.add(records[i]);
         }
 
+        load_Window.setVisible(false);
         c.add(load_Window);
     }
 
