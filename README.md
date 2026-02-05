@@ -1,2 +1,3 @@
 깃허브 어려움
-이전거 놔두고 새로 만듬
+this is final version for now
+fixed cordinate identification system and board data algorithm
