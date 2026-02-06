@@ -1,40 +1,34 @@
 public abstract class ChessPiece {
     protected Game_Record game;
-    protected int index_X;
-    protected int index_Y;
+    protected Cordinate index;
     protected String image;
-    final protected String IMAGE_LOCATION = "C:/Users/Sungbin Ko/Desktop/coding/Java/Chess_Game_Remaster/src/images/";
+    final protected String IMAGE_LOCATION = System.getProperty("user.dir") + "/src/images/";
+    public boolean isBlack;
 
-    public ChessPiece(Game_Record game, int index_X, int index_Y) {
+    public ChessPiece(Game_Record game, Cordinate index, boolean isBlack) {
         this.game = game;
-        this.index_X = index_X;
-        this.index_Y = index_Y;
+        this.index = index;
+        this.isBlack = isBlack;
     }
 
     /**
-     * Check required index and return integer(state of the index)
+     * Check required index is right index to move
      * 
-     * @param index_X
-     * @param index_Y
-     * @return empty: 0, team: 1,enemy: -1, out of range: 2, Error: -2
+     * @param index
+     * @return empty: 0, team: 1,enemy: -1, Error: -2
      */
-    public int checkIndex(int index_X, int index_Y) {
-        int value = game.boardData[index_Y][index_X];
-
-        if (value == 0) {
+    public int isTurn(Cordinate index) {
+        if (game.board_data.getPiece(index).isEmpty()) {
             return 0;
         }
-        if (index_X < 0 || index_X > 7 || index_Y < 0 || index_Y > 7) {
-            return 2;
-        }
         if (game.getTurn() > 0) {
-            if (value > 0) {
+            if (!game.board_data.getPiece(index).isBlack) {
                 return 1;
             }
             return -1;
         }
         if (game.getTurn() < 0) {
-            if (value > 0) {
+            if (game.board_data.getPiece(index).isBlack) {
                 return -1;
             }
             return 1;
@@ -48,7 +42,7 @@ public abstract class ChessPiece {
      * @param index_Y
      * @return
      */
-    abstract public boolean moveable(int index_X, int index_Y);
+    abstract public boolean moveable(Cordinate index);
 
     /**
      * 
@@ -57,4 +51,12 @@ public abstract class ChessPiece {
     abstract public String getImage();
 
     abstract public boolean isEmpty();
+
+    /**
+     * @return String Notation(SAN)
+     * this method retunr String tpye of Notation that shows current movement of piece
+     * start location -> piece name -> does catch -> end location -> speacial rules (castle -> promotion -> En passant) -> check, checkmate
+     * 
+     */
+    //abstract public String returnNotation();
 }

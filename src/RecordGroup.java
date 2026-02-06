@@ -140,12 +140,12 @@ public class RecordGroup {
             wr.write(record.getTurn() + "");
             wr.newLine();
             wr.write(record.getNumMoved() + "");
-            for (int i = 0; i < record.getNumMoved() * 4; i += 4) {
+            /*for (int i = 0; i < record.getNumMoved() * 4; i += 4) {
                 wr.newLine();
                 wr.write(record.movement.get(i) + ", " + record.movement.get(i + 1));
                 wr.newLine();
                 wr.write(record.movement.get(i + 2) + ", " + record.movement.get(i + 3));
-            }
+            }*/
             wr.close();
             return true;
         } catch (IOException e) {
@@ -208,14 +208,14 @@ public class RecordGroup {
                     movement[i + 2] = Integer.parseInt(b.substring(0, 1));
                     movement[i + 3] = Integer.parseInt(b.substring(3, 4));
                 }
-                for (int i = 0; i < movement.length; i++) {
+                /*for (int i = 0; i < movement.length; i++) {
                     newGame.movement.add(movement[i]);
                 }
                 for (int i = 0; i < movement.length; i += 4) {
                     newGame.move(newGame.movement.get(i), newGame.movement.get(i + 1), newGame.movement.get(i + 2),
                             newGame.movement.get(i + 3));
-                }
-                newGame.setPieces();
+                }*/
+                newGame.setBoard();
                 this.records.add(newGame);
             }
             rd.close();

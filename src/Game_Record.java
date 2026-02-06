@@ -1,67 +1,65 @@
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Game_Record {
-    /** +: white, -: black */
+
+    /**
+     * +: white, -: black
+     */
     protected int turn;
-    /** index X of user selection */
+    /**
+     * index X of user selection
+     */
     protected int index_X;
-    /** index Y of user selection */
+    /**
+     * index Y of user selection
+     */
     protected int index_Y;
-    /** number of pieces were moved */
+    /**
+     * number of pieces were moved
+     */
     private int numMoved;
-    /** +: white, -: black, 0: not finished */
+    /**
+     * +: white, -: black, 0: not finished
+     */
     private int win;
-    /** name of player1 */
+    /**
+     * name of player1
+     */
     private String player1;
-    /** name of player2 */
+    /**
+     * name of player2
+     */
     private String player2;
     /**
-     * characteristic 4 digits code of game, use this when load game or delete game
+     * characteristic 4 digits code of game, use this when load game or delete
+     * game
      */
     private String code;
-    /** Date when the game was created */
+    /**
+     * Date when the game was created
+     */
     private Date now = new Date();
     private String date;
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    /**
-     * 1: first index_X
-     * 2: first index_Y
-     * 3: second index_X
-     * 4: second index_Y
-     * movement.add(new Integer[]{})
-     */
-    ArrayList<Integer> movement = new ArrayList<Integer>();
-
-    ChessPiece[][] pieces = new ChessPiece[8][8];
+    Board_data board_data = new Board_data();
 
     /**
-     * 0: empty
-     * |1|: pwan
-     * |2|: bishop
-     * |3|: knight
-     * |4|: rook
-     * |5|: queen
-     * |6|: king
-     * +: white -: black
+     * 체스 기본 보드 세팅 메소드
      */
-    int boardData[][] = { { -4, -3, -2, -5, -6, -2, -3, -4 },
-            { -1, -1, -1, -1, -1, -1, -1, -1 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 1, 1, 1, 1, 1, 1, 1, 1 },
-            { 4, 3, 2, 5, 6, 2, 3, 4 } };
+    public void setBoard() {
+        board_data.setBoard(this);
+    }
 
     /**
      * Constructor
-     * 
-     * @param player1  name
-     * @param player2  name
+     *
+     * @param player1 name
+     * @param player2 name
      * @param numMoved
-     * @param turn     +: white, -: black
+     * @param turn +: white, -: black
      * @param records
      */
     public Game_Record(String player1, String player2, int numMoved, int turn, ArrayList<Game_Record> records) {
@@ -76,90 +74,8 @@ public class Game_Record {
     }
 
     /**
-     * set ChessPiece[] pieces
-     * change integers of boardData[index_X][intdex_Y] and create new
-     * Object(ChessPiece) at pieces
-     */
-    public void setPieces() {
-        for (int index_X = 0; index_X < boardData.length; index_X++) {
-            for (int index_Y = 0; index_Y < boardData[0].length; index_Y++) {
-                switch (boardData[index_Y][index_X]) {
-                    case 0:
-                        pieces[index_Y][index_X] = new Empty(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case 1:
-                        pieces[index_Y][index_X] = new Pawn(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case 2:
-                        pieces[index_Y][index_X] = new Bishop(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case 3:
-                        pieces[index_Y][index_X] = new Knight(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case 4:
-                        pieces[index_Y][index_X] = new Rook(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case 5:
-                        pieces[index_Y][index_X] = new Queen(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case 6:
-                        pieces[index_Y][index_X] = new King(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case -1:
-                        pieces[index_Y][index_X] = new Pawn(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case -2:
-                        pieces[index_Y][index_X] = new Bishop(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case -3:
-                        pieces[index_Y][index_X] = new Knight(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case -4:
-                        pieces[index_Y][index_X] = new Rook(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case -5:
-                        pieces[index_Y][index_X] = new Queen(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    case -6:
-                        pieces[index_Y][index_X] = new King(this, index_X, index_Y);
-                        pieces[index_Y][index_X].index_X = index_X;
-                        pieces[index_Y][index_X].index_Y = index_Y;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-    }
-
-    /**
      * remove current game and load selected Game
-     * 
+     *
      * @param record
      * @return true if load successfully, false if not
      */
@@ -171,10 +87,9 @@ public class Game_Record {
             this.setPlayer2(record.getPlayer2());
             this.setCode(record.getCode());
             this.setTurn(record.getTurn());
-            this.boardData = record.boardData;
-            this.movement = record.movement;
+            this.board_data = record.board_data;
             resetDate();
-            setPieces();
+            setBoard();
             return true;
         }
         return false;
@@ -182,51 +97,36 @@ public class Game_Record {
 
     /**
      * move the Chesspiece from index 1 to index 2
-     * 
-     * @param index_X1 index_X of piece location
-     * @param index_Y1 index_Y of piece location
-     * @param index_X2 index_X of the location that piece will move
-     * @param index_Y2 index_Y of the location that piece will move
+     *
+     * @param start_index Start index of piece that will move
+     * @param end_index index of the location that piece will move
      * @return true if moved successfully, false if not
      */
-    public void move(int index_X1, int index_Y1, int index_X2, int index_Y2) {
-        int temp;
-        temp = boardData[index_Y1][index_X1];
-        this.boardData[index_Y1][index_X1] = 0;
-        this.boardData[index_Y2][index_X2] = temp;
+    public void move(Cordinate start_index, Cordinate end_index) {
+        // 이동 관련 (Move Actions)
+        boolean isCapture = false;        // 기물을 잡았는가 ('x')
+        boolean isPromotion = false;      // 프로모션(폰 승급)이 발생했는가 ('=')
+        boolean isCheck = false;          // 체크 상태인가 ('+')
+        boolean isCheckmate = false;      // 체크메이트인가 ('#')
+
+        // 캐슬링 관련 (Castling)
+        boolean isKingsideCastling = false;  // 킹사이드 캐슬링인가 ('0-0')
+        boolean isQueensideCastling = false; // 퀸사이드 캐슬링인가 ('0-0-0')
+
+        // 특수 규칙 (Special Rules)
+        boolean isEnPassant = false;      // 앙파상으로 잡았는가
+        boolean isAmbiguous = false;      // 도착지가 같아 출발지를 명시해야 하는가 (모호성 제거)
+        ChessPiece temp;
+
+
+
+        temp = board_data.getPiece(start_index);
+        this.board_data.setPiece(start_index, new Empty(this, start_index, false));
+        this.board_data.setPiece(end_index, temp);
+
         this.numMoved++;
-        this.movement.add(index_X1);
-        this.movement.add(index_Y1);
-        this.movement.add(index_X2);
-        this.movement.add(index_Y2);
         this.setTurn(this.getTurn() * -1);
-        setPieces();
-    }
-
-    /**
-     * check winner of chessgame
-     * check the survive of White king and Black king, and edit win value
-     */
-    public void winner() {
-        boolean Wking_alive = false;
-        boolean Bking_alive = false;
-
-        for (int i = 0; i < boardData[0].length; i++) {
-            for (int j = 0; j < boardData.length; j++) {
-                if (boardData[i][j] == 6) {
-                    Wking_alive = true;
-                }
-                if (boardData[i][j] == -6) {
-                    Bking_alive = true;
-                }
-            }
-        }
-        if (Wking_alive && !Bking_alive) {
-            this.win = 1;
-        }
-        if (!Wking_alive && Bking_alive) {
-            this.win = -1;
-        }
+        setBoard();
     }
 
     /**
@@ -238,7 +138,7 @@ public class Game_Record {
 
     /**
      * Generate new no-overlapping Characteristic code
-     * 
+     *
      * @param records
      * @return new code
      */
